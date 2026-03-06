@@ -1,0 +1,37 @@
+<!--Formular zur Erfassung eines neuen Geisternetzes.-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+<h:head>
+  <title>Geisternetz melden</title>
+</h:head>
+
+<h:body>
+  <h1>Geisternetz melden</h1>
+
+  <h:form>
+    <p>
+      Standort (GPS oder Text):<br/>
+      <h:inputText value="#{geisternetzBean.standort}" />
+    </p>
+
+    <p>
+      Groesse:<br/>
+      <h:inputText value="#{geisternetzBean.groesse}" />
+    </p>
+    
+    <p>
+      Melder Name (optional):<br/>
+      <h:inputText value="#{geisternetzBean.melderName}" />
+    </p>
+
+    <p>
+      Melder Telefon (optional):<br/>
+      <h:inputText value="#{geisternetzBean.melderTelefon}" />
+    </p>
+
+    <h:commandButton value="Speichern" action="#{geisternetzBean.melden}" />
+    <h:link value="Zurück zur Liste" outcome="netze" />
+  </h:form>
+</h:body>
+</html>

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<h:head>
+    <title>Geisternetze</title>
+</h:head>
+
+<h:body>
+    <h1>Liste der Geisternetze</h1>
+
+    <h:link value="Netz melden" outcome="melden" />
+    <br/><br/>
+
+    <h:form id="form">
+
+        <h:panelGroup rendered="#{empty geisternetzBean.netze}">
+            <p>Noch keine offenen Einträge (GEMELDET / BERGUNG_BEVORSTEHEND).</p>
+        </h:panelGroup>
+
+        <h:dataTable value="#{geisternetzBean.netze}" var="n" border="1"
+                     rendered="#{not empty geisternetzBean.netze}">
+
+            <h:column>
+                <f:facet name="header">Standort</f:facet>
+                #{n.standort}
+            </h:column>
+
+            <h:column>
+                <f:facet name="header">Größe</f:facet>
+                #{n.groesse}
+            </h:column>
+
+            <h:column>
+                <f:facet name="header">Status</f:facet>
+                #{n.status}
+            </h:column>
+
+            <h:column>
+                <f:facet name="header">Berger</f:facet>
+
+                <!-- kompatibel ohne Ternary -->
+                <h:panelGroup rendered="#{not empty n.berger}">
+                    #{n.berger.name}
+                </h:panelGroup>
+                <h:panelGroup rendered="#{empty n.berger}">
+                    -
+                </h:panelGroup>
+            </h:column>
+
+            <h:column>
+                <f:facet name="header">Aktion</f:facet>
+
+                <h:panelGrid columns="1" style="min-width:260px">
+
+                    <h:panelGroup>
+                        <b>Bergung eintragen</b><br/>
+                        Berger Name:<br/>
+                        <h:inputText value="#{geisternetzBean.bergerName}" /><br/>
+                        Berger Telefon:<br/>
+                        <h:inputText value="#{geisternetzBean.bergerTelefon}" /><br/>
+                        <h:commandButton value="Bergung eintragen"
+                                         action="#{geisternetzBean.bergungEintragen(n.id)}" />
+                    </h:panelGroup>
+
+                    <h:panelGroup>
+                        <hr/>
+                        <b>Als geborgen markieren</b><br/>
+                        <h:commandButton value="Geborgen"
+                                         action="#{geisternetzBean.alsGeborgenMarkieren(n.id)}" />
+                    </h:panelGroup>
+
+                    <h:panelGroup>
+                        <hr/>
+                        <b>Verschollen melden (verpflichtende Angaben)</b><br/>
+                        Name:<br/>
+                        <h:inputText value="#{geisternetzBean.verschollenName}" /><br/>
+                        Telefon:<br/>
+                        <h:inputText value="#{geisternetzBean.verschollenTelefon}" /><br/>
+                        <h:commandButton value="Als verschollen markieren"
+                                         action="#{geisternetzBean.alsVerschollenMarkieren(n.id)}" />
+                    </h:panelGroup>
+
+                </h:panelGrid>
+            </h:column>
+        </h:dataTable>
+    </h:form>
+</h:body>
+</html>
